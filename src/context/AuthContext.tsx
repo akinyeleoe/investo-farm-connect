@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
@@ -8,13 +7,15 @@ interface User {
   email: string;
   name: string;
   isAdmin: boolean;
+  referralCode?: string;
+  referredBy?: string | null;
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
-  register: (name: string, email: string, password: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string, referralCode?: string | null) => Promise<boolean>;
   logout: () => void;
   isLoggedIn: boolean;
 }
@@ -29,6 +30,7 @@ const mockUsers = [
     name: 'Admin User',
     password: 'password123',
     isAdmin: true,
+    referralCode: 'ADMIN001',
   },
   {
     id: '2',
@@ -36,6 +38,7 @@ const mockUsers = [
     name: 'Demo Investor',
     password: 'password123',
     isAdmin: false,
+    referralCode: 'INV002',
   },
 ];
 
@@ -96,7 +99,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
-  const register = async (name: string, email: string, password: string): Promise<boolean> => {
+  const register = async (
+    name: string, 
+    email: string, 
+    password: string, 
+    referralCode?: string | null
+  ): Promise<boolean> => {
     // Simulate API request delay
     setLoading(true);
     return new Promise((resolve) => {
@@ -114,6 +122,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setLoading(false);
           resolve(false);
         } else {
+          // Generate a unique referral code for the new user
+          const uniqueReferralCode = `FM${Date.now().toString().slice(-6)}`;
+          
           // In a real app, you would send this data to your API
           // For this demo, we'll just simulate a successful registration
           const newUser = {
@@ -121,15 +132,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             email,
             name,
             isAdmin: false,
+            referralCode: uniqueReferralCode,
+            referredBy: referralCode || null,
           };
           
           setUser(newUser);
           localStorage.setItem('farmly_user', JSON.stringify(newUser));
           
-          toast({
-            title: 'Registration successful',
-            description: 'Your account has been created',
-          });
+          // Show different toast if user was referred
+          if (referralCode) {
+            toast({
+              title: 'Registration successful',
+              description: 'Your account has been created with a referral code',
+            });
+          } else {
+            toast({
+              title: 'Registration successful',
+              description: 'Your account has been created',
+            });
+          }
           
           setLoading(false);
           resolve(true);

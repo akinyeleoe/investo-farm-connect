@@ -9,9 +9,10 @@ import { Loader2 } from 'lucide-react';
 
 interface AuthFormProps {
   type: 'login' | 'register';
+  referralCode?: string | null;
 }
 
-const AuthForm = ({ type }: AuthFormProps) => {
+const AuthForm = ({ type, referralCode }: AuthFormProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -64,7 +65,8 @@ const AuthForm = ({ type }: AuthFormProps) => {
       if (type === 'login') {
         success = await login(email, password);
       } else {
-        success = await register(name, email, password);
+        // Pass referral code to register function if available
+        success = await register(name, email, password, referralCode);
       }
       
       if (success) {
