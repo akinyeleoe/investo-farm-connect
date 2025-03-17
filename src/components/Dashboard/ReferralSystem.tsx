@@ -18,6 +18,20 @@ const ReferralSystem = () => {
     });
   };
   
+  const shareViaWhatsApp = () => {
+    const text = `Join Farmly.ng and invest in agriculture with returns up to 36% per annum! Use my referral code: ${referralCode} to sign up: https://farmly.ng/register?ref=${referralCode}`;
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+  };
+  
+  const shareViaEmail = () => {
+    const subject = "Invest with Farmly.ng - Agriculture Investment Platform";
+    const body = `Hi there,\n\nI thought you might be interested in Farmly.ng, an agriculture investment platform with returns up to 36% per annum.\n\nUse my referral code: ${referralCode} to sign up: https://farmly.ng/register?ref=${referralCode}\n\nBest regards,`;
+    
+    const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+  };
+  
   // Mock referral data
   const referrals = [
     { id: 1, name: 'John Doe', date: '2024-01-15', status: 'Active', bonus: 2500 },
@@ -61,10 +75,10 @@ const ReferralSystem = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2" onClick={shareViaWhatsApp}>
               <Share2 className="h-4 w-4" /> Share via WhatsApp
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2" onClick={shareViaEmail}>
               <Share2 className="h-4 w-4" /> Share via Email
             </Button>
           </div>
