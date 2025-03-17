@@ -6,6 +6,7 @@ import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import InvestmentPlans from '@/components/InvestmentPlans';
 import Testimonials from '@/components/Testimonials';
+import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 
@@ -32,6 +33,7 @@ const Index = () => {
         </section>
         <InvestmentPlans />
         <Testimonials />
+        <FAQ />
       </main>
       
       <Footer />
