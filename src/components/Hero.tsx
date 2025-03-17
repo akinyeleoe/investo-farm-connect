@@ -62,7 +62,7 @@ const Hero = () => {
               <div className="absolute -z-10 inset-0 bg-farm-primary/20 rounded-3xl blur-2xl transform rotate-6"></div>
               <div className="glass-morph rounded-3xl overflow-hidden shadow-xl p-6 image-fade-in">
                 <img 
-                  src="https://images.unsplash.com/photo-1590682300936-a609d3313091?q=80&w=1000&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
                   alt="Modern agricultural farm" 
                   className="w-full h-80 object-cover rounded-xl"
                   loading="lazy"

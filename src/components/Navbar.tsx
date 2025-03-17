@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,7 +31,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-farm-primary">Farmly.ng</span>
+            <img 
+              src="/lovable-uploads/bf25be4c-d553-4fb8-b602-cc79f4966c8f.png" 
+              alt="Farmly Logo" 
+              className="h-10"
+            />
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8">

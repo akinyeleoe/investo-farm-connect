@@ -3,6 +3,8 @@ import { Check, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const investmentPlans = [
   {
@@ -12,6 +14,7 @@ const investmentPlans = [
     roi: '36%',
     period: '1 Year',
     minInvestment: '₦100,000',
+    image: '/lovable-uploads/bf25be4c-d553-4fb8-b602-cc79f4966c8f.png',
     benefits: [
       '36% return per annum',
       'Monthly interest payouts',
@@ -20,6 +23,9 @@ const investmentPlans = [
       'Minimum investment: ₦100,000',
     ],
     popular: false,
+    color: 'bg-blue-50 dark:bg-blue-900/20',
+    borderColor: 'border-blue-200 dark:border-blue-800',
+    iconColor: 'text-blue-600 dark:text-blue-400',
   },
   {
     id: 'medium-term',
@@ -28,6 +34,7 @@ const investmentPlans = [
     roi: '36% + 10%',
     period: '2 Years',
     minInvestment: '₦200,000',
+    image: '/lovable-uploads/bf25be4c-d553-4fb8-b602-cc79f4966c8f.png',
     benefits: [
       '36% return per annum',
       'Monthly interest payouts',
@@ -36,6 +43,10 @@ const investmentPlans = [
       'Minimum investment: ₦200,000',
     ],
     popular: true,
+    color: 'bg-farm-primary/10 dark:bg-farm-primary/20',
+    borderColor: 'border-farm-primary dark:border-farm-primary/70',
+    iconColor: 'text-farm-primary dark:text-farm-primary/90',
+    gradientBg: 'bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20',
   },
   {
     id: 'long-term',
@@ -44,6 +55,7 @@ const investmentPlans = [
     roi: '25% to 50%',
     period: '3+ Years',
     minInvestment: '₦300,000',
+    image: '/lovable-uploads/bf25be4c-d553-4fb8-b602-cc79f4966c8f.png',
     benefits: [
       '25% return per annum (years 1-3)',
       '50% return per annum (year 4+)',
@@ -52,6 +64,9 @@ const investmentPlans = [
       'Minimum investment: ₦300,000',
     ],
     popular: false,
+    color: 'bg-orange-50 dark:bg-orange-900/20',
+    borderColor: 'border-orange-200 dark:border-orange-800',
+    iconColor: 'text-orange-600 dark:text-orange-400',
   },
 ];
 
@@ -70,11 +85,14 @@ const InvestmentPlans = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {investmentPlans.map((plan) => (
-            <div
+            <Card
               key={plan.id}
-              className={`relative glass-morph rounded-2xl p-8 transition-all duration-300 ${
+              className={`relative transition-all duration-300 overflow-visible ${
                 hoveredPlan === plan.id ? 'scale-[1.02]' : ''
-              } ${plan.popular ? 'border-farm-primary border-2' : ''}`}
+              } ${plan.popular 
+                ? `${plan.gradientBg || ''} ${plan.borderColor} border-2 shadow-lg`
+                : `${plan.color} ${plan.borderColor} border shadow`
+              }`}
               onMouseEnter={() => setHoveredPlan(plan.id)}
               onMouseLeave={() => setHoveredPlan(null)}
             >
@@ -84,38 +102,43 @@ const InvestmentPlans = () => {
                 </div>
               )}
               
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold mb-2">{plan.title}</h3>
-                <p className="text-muted-foreground mb-4">{plan.description}</p>
-                <div className="flex items-end justify-center gap-1">
+              <CardHeader className="text-center">
+                <CardTitle className="text-xl font-bold">{plan.title}</CardTitle>
+                <CardDescription className="mb-4">{plan.description}</CardDescription>
+                
+                <div className="flex items-center justify-center gap-1">
                   <span className="text-4xl font-bold">{plan.roi}</span>
                   <span className="text-muted-foreground mb-1">per annum</span>
                 </div>
                 <div className="text-sm text-muted-foreground mt-1">{plan.period}</div>
-              </div>
+              </CardHeader>
               
-              <div className="space-y-3 mb-8">
-                {plan.benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <Check className="h-5 w-5 text-farm-primary shrink-0 mt-0.5" />
-                    <span className="text-sm">{benefit}</span>
-                  </div>
-                ))}
-              </div>
+              <CardContent>
+                <div className="space-y-3 mb-8">
+                  {plan.benefits.map((benefit, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <Check className={`h-5 w-5 ${plan.iconColor} shrink-0 mt-0.5`} />
+                      <span className="text-sm">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
               
-              <Link to="/register">
-                <Button 
-                  className={`w-full rounded-full ${
-                    plan.popular 
-                      ? 'bg-farm-primary hover:bg-farm-primary/90' 
-                      : 'bg-white hover:bg-slate-50 text-foreground border border-slate-200'
-                  }`}
-                >
-                  Start Investing
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
+              <CardFooter className="flex justify-center pb-6">
+                <Link to="/register" className="w-full">
+                  <Button 
+                    className={`w-full rounded-full ${
+                      plan.popular 
+                        ? 'bg-farm-primary hover:bg-farm-primary/90 text-white' 
+                        : 'bg-white hover:bg-slate-50 text-foreground border border-slate-200'
+                    }`}
+                  >
+                    Start Investing
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
           ))}
         </div>
         
