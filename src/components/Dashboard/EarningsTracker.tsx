@@ -13,19 +13,20 @@ import {
   LineChart,
 } from 'recharts';
 
-interface Investment {
+export interface Investment {
   id: string;
-  type: string;
+  plan: 'short' | 'medium' | 'long';
   amount: number;
   startDate: string;
   endDate: string;
-  status: string;
-  monthlyReturn: number;
-  totalReturn: number;
-  nextPayout: string;
+  interestRate: number;
+  exitBonus?: number;
+  monthlyReturn?: number;
+  totalReturn?: number;
+  nextPayout?: string;
 }
 
-interface EarningsTrackerProps {
+export interface EarningsTrackerProps {
   investments: Investment[];
 }
 
@@ -58,9 +59,12 @@ const generateEarningsData = (investments: Investment[]) => {
       const investmentMonthIndex = investmentStartDate.getMonth();
       const investmentYear = investmentStartDate.getFullYear();
       
+      // Calculate monthly return for this investment
+      const monthlyReturn = inv.monthlyReturn || (inv.amount * inv.interestRate / 12 / 100);
+      
       // Only count returns if the investment had started by this month
       if (year > investmentYear || (year === investmentYear && monthIndex >= investmentMonthIndex)) {
-        return sum + inv.monthlyReturn;
+        return sum + monthlyReturn;
       }
       return sum;
     }, 0);
@@ -75,7 +79,10 @@ const generateEarningsData = (investments: Investment[]) => {
   // Current month
   earnings.push({
     name: `${months[currentMonth]} ${currentYear}`,
-    amount: investments.reduce((sum, inv) => sum + inv.monthlyReturn, 0),
+    amount: investments.reduce((sum, inv) => {
+      const monthlyReturn = inv.monthlyReturn || (inv.amount * inv.interestRate / 12 / 100);
+      return sum + monthlyReturn;
+    }, 0),
     paid: false,
   });
   
@@ -90,9 +97,12 @@ const generateEarningsData = (investments: Investment[]) => {
         const investmentEndDate = new Date(inv.endDate);
         const monthDate = new Date(year, month, 1);
         
+        // Calculate monthly return for this investment
+        const monthlyReturn = inv.monthlyReturn || (inv.amount * inv.interestRate / 12 / 100);
+        
         // Only count returns if the investment hasn't ended by this month
         if (monthDate <= investmentEndDate) {
-          return sum + inv.monthlyReturn;
+          return sum + monthlyReturn;
         }
         return sum;
       }, 0),
@@ -118,7 +128,10 @@ const generateCumulativeData = (earningsData: any[]) => {
 };
 
 const EarningsTracker = ({ investments }: EarningsTrackerProps) => {
-  const earningsData = generateEarningsData(investments);
+  // Default to empty array if investments is undefined
+  const investmentsData = investments || [];
+  
+  const earningsData = generateEarningsData(investmentsData);
   const cumulativeData = generateCumulativeData(earningsData);
   
   const [chartType, setChartType] = useState<'monthly' | 'cumulative'>('monthly');

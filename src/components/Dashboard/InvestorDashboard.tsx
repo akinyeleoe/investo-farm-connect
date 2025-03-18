@@ -79,7 +79,7 @@ const InvestorDashboard = () => {
         </TabsList>
         
         <TabsContent value="earnings" className="space-y-4">
-          <EarningsTracker />
+          <EarningsTracker investments={user.investments} />
         </TabsContent>
         
         <TabsContent value="payouts" className="space-y-4">

@@ -24,6 +24,11 @@ interface Investment {
   exitBonus?: number;
 }
 
+// Add a new interface for users with password (for internal use)
+interface UserWithPassword extends User {
+  password: string;
+}
+
 interface AuthContextType {
   user: User | null;
   loading: boolean;
@@ -37,8 +42,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock user data for demonstration
-const mockUsers = [
+// Mock user data for demonstration - using UserWithPassword
+const mockUsers: UserWithPassword[] = [
   {
     id: '1',
     email: 'admin@farmly.ng',
@@ -63,7 +68,7 @@ const mockUsers = [
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [allUsers, setAllUsers] = useState<User[]>(mockUsers);
+  const [allUsers, setAllUsers] = useState<UserWithPassword[]>(mockUsers);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -167,7 +172,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           // In a real app, you would send this data to your API
           // For this demo, we'll just simulate a successful registration
-          const newUser = {
+          const newUser: UserWithPassword = {
             id: `user_${Date.now()}`,
             email,
             name,
@@ -281,7 +286,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logout,
         isLoggedIn: !!user,
         transferFunds,
-        allUsers,
+        allUsers: allUsers.map(({ password, ...rest }) => rest), // Return users without passwords
       }}
     >
       {children}
