@@ -8,7 +8,7 @@ const testimonials = [
     name: 'Oluwaseun Adebayo',
     role: 'Short-term Investor',
     testimonial: 'I started with the short-term plan 6 months ago, and I\'ve been receiving my monthly returns consistently. The platform is transparent and easy to use.',
-    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+    avatar: 'https://randomuser.me/api/portraits/men/77.jpg',
     stars: 5,
   },
   {
@@ -16,7 +16,7 @@ const testimonials = [
     name: 'Chioma Okafor',
     role: 'Medium-term Investor',
     testimonial: 'Farmly.ng has been my best investment decision this year. The returns are impressive, and I love how I can track my investment growth from my dashboard.',
-    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+    avatar: 'https://randomuser.me/api/portraits/women/79.jpg',
     stars: 5,
   },
   {
@@ -24,7 +24,7 @@ const testimonials = [
     name: 'Emeka Nwachukwu',
     role: 'Long-term Investor',
     testimonial: 'I\'m investing for my retirement with the long-term plan. The concept of increasing returns after 3 years makes it perfect for pension planning.',
-    avatar: 'https://randomuser.me/api/portraits/men/68.jpg',
+    avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
     stars: 4,
   },
   {
@@ -32,7 +32,7 @@ const testimonials = [
     name: 'Aisha Mohammed',
     role: 'Short-term Investor',
     testimonial: 'The monthly payout system works flawlessly. I receive my interest right on schedule every month without any delays or complications.',
-    avatar: 'https://randomuser.me/api/portraits/women/17.jpg',
+    avatar: 'https://randomuser.me/api/portraits/women/40.jpg',
     stars: 5,
   },
   {
@@ -40,7 +40,7 @@ const testimonials = [
     name: 'Tunde Bakare',
     role: 'Medium-term Investor',
     testimonial: 'I started with a small investment to test the waters, and I\'ve been so impressed that I\'ve now increased my investment amount significantly.',
-    avatar: 'https://randomuser.me/api/portraits/men/91.jpg',
+    avatar: 'https://randomuser.me/api/portraits/men/23.jpg',
     stars: 5,
   },
 ];
@@ -102,7 +102,7 @@ const Testimonials = () => {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Investors Say</h2>
           <p className="text-muted-foreground text-lg">
             Don't take our word for it. Hear from our satisfied investors about their experience with Farmly.ng.
@@ -120,7 +120,7 @@ const Testimonials = () => {
                   key={testimonial.id}
                   className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-4"
                 >
-                  <div className="glass-card rounded-2xl p-8 h-full flex flex-col">
+                  <div className="glass-card rounded-2xl p-8 h-full flex flex-col hover-scale transition-all duration-300 hover:shadow-lg">
                     <div className="flex items-center space-x-1 mb-4">
                       {[...Array(5)].map((_, i) => (
                         <Star 
@@ -135,7 +135,7 @@ const Testimonials = () => {
                       <img 
                         src={testimonial.avatar} 
                         alt={testimonial.name} 
-                        className="w-12 h-12 rounded-full mr-4"
+                        className="w-12 h-12 rounded-full mr-4 border-2 border-farm-primary"
                         loading="lazy"
                       />
                       <div>
@@ -175,7 +175,9 @@ const Testimonials = () => {
                 setCurrentSlide(index);
               }}
               className={`w-3 h-3 mx-1 rounded-full transition-colors ${
-                index === currentSlide % testimonials.length ? 'bg-farm-primary' : 'bg-gray-300'
+                index === currentSlide % testimonials.length 
+                  ? 'bg-farm-primary scale-125 transition-transform' 
+                  : 'bg-gray-300'
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />

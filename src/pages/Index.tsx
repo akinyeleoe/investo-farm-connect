@@ -18,14 +18,14 @@ const Index = () => {
       <main className="flex-grow">
         <Hero />
         <Features />
-        <section className="py-16 px-4 bg-gray-50">
+        <section className="py-16 px-4 bg-gray-50 animate-fade-in">
           <div className="container mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready to Start Investing?</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="px-8">
+              <Button asChild size="lg" className="px-8 hover-scale">
                 <Link to="/register">Create an Account</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="px-8">
+              <Button asChild variant="outline" size="lg" className="px-8 hover-scale">
                 <Link to="/login">Sign In</Link>
               </Button>
             </div>

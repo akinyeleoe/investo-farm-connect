@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -58,10 +58,10 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-6">Legal</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
+                <Link to="/terms" className="text-gray-300 hover:text-white transition-colors">Terms of Service</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+                <Link to="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link>
               </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors">Cookie Policy</a>
@@ -74,18 +74,34 @@ const Footer = () => {
           
           <div>
             <h4 className="text-lg font-bold mb-6">Contact Us</h4>
-            <ul className="space-y-3">
-              <li className="flex items-center">
-                <Mail size={18} className="mr-2 text-farm-primary" />
-                <a href="mailto:contact@farmly.ng" className="text-gray-300 hover:text-white transition-colors">
-                  contact@farmly.ng
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <Mail size={18} className="mr-2 text-farm-primary mt-1 flex-shrink-0" />
+                <a href="mailto:invest@farmly.ng" className="text-gray-300 hover:text-white transition-colors">
+                  invest@farmly.ng
                 </a>
               </li>
-              <li className="flex items-center">
-                <Phone size={18} className="mr-2 text-farm-primary" />
-                <a href="tel:+2349012345678" className="text-gray-300 hover:text-white transition-colors">
-                  +234 901 234 5678
-                </a>
+              <li className="flex items-start">
+                <Phone size={18} className="mr-2 text-farm-primary mt-1 flex-shrink-0" />
+                <div>
+                  <a href="tel:+2348109821224" className="text-gray-300 hover:text-white transition-colors block">
+                    +234 810 982 1224 (Nigeria)
+                  </a>
+                  <a href="tel:+971566707032" className="text-gray-300 hover:text-white transition-colors block mt-1">
+                    +971 56 670 7032 (Dubai)
+                  </a>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <MapPin size={18} className="mr-2 text-farm-primary mt-1 flex-shrink-0" />
+                <div>
+                  <p className="text-gray-300">
+                    Plot 3, A N Power Line, Sabo, Ikorodu, Lagos, Nigeria
+                  </p>
+                  <p className="text-gray-300 mt-2">
+                    Suite 303, Tecom House, Mall of the Emirates, Dubai, UAE
+                  </p>
+                </div>
               </li>
             </ul>
           </div>
