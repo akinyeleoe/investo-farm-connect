@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext } from 'react';
 import { useAuthProvider } from '@/hooks/useAuthProvider';
-import { User } from '@/types/user';
+import { User, PendingInvestment } from '@/types/user';
 
 interface AuthContextType {
   user: User | null;
@@ -11,6 +11,7 @@ interface AuthContextType {
   logout: () => void;
   isLoggedIn: boolean;
   transferFunds: (userId: string, amount: number, description: string) => Promise<boolean>;
+  addPendingInvestment: (pendingInvestment: Omit<PendingInvestment, 'id'>) => Promise<boolean>;
   allUsers: User[];
 }
 

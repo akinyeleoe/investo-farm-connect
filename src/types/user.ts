@@ -1,26 +1,33 @@
-
 export interface Investment {
   id: string;
-  plan: 'short' | 'medium' | 'long';
+  name: string;
   amount: number;
-  startDate: string;
-  endDate: string;
-  interestRate: number;
-  exitBonus?: number;
-  monthlyReturn?: number;
-  totalReturn?: number;
-  nextPayout?: string;
+  date: string;
+  roi: number;
+  term: number;
+  monthlyReturns?: { month: string; amount: number }[];
+}
+
+export interface PendingInvestment {
+  id: string;
+  planId: string;
+  planName: string;
+  amount: number;
+  referenceCode: string;
+  date: string;
+  status: 'pending' | 'completed' | 'cancelled';
 }
 
 export interface User {
   id: string;
-  email: string;
   name: string;
+  email: string;
   isAdmin: boolean;
-  referralCode?: string;
-  referredBy?: string | null;
+  referralCode: string;
+  referredBy: string | null;
   balance: number;
   investments: Investment[];
+  pendingInvestments?: PendingInvestment[];
 }
 
 export interface UserWithPassword extends User {

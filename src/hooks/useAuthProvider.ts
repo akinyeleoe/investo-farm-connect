@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
 import { mockUsers } from '@/data/mockUsers';
-import { User, UserWithPassword } from '@/types/user';
+import { User, UserWithPassword, PendingInvestment } from '@/types/user';
 
 export const useAuthProvider = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -12,7 +11,6 @@ export const useAuthProvider = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Check for existing user session on load
   useEffect(() => {
     const storedUser = localStorage.getItem('farmly_user');
     if (storedUser) {
@@ -25,7 +23,6 @@ export const useAuthProvider = () => {
       }
     }
     
-    // Load all users from localStorage or use mockUsers
     const storedAllUsers = localStorage.getItem('farmly_all_users');
     if (storedAllUsers) {
       try {
@@ -42,13 +39,11 @@ export const useAuthProvider = () => {
     setLoading(false);
   }, []);
 
-  // Save all users to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('farmly_all_users', JSON.stringify(allUsers));
   }, [allUsers]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Simulate API request delay
     setLoading(true);
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -57,7 +52,6 @@ export const useAuthProvider = () => {
         );
 
         if (foundUser) {
-          // Omit password from stored user object
           const { password, ...userWithoutPassword } = foundUser;
           setUser(userWithoutPassword);
           localStorage.setItem('farmly_user', JSON.stringify(userWithoutPassword));
@@ -89,11 +83,9 @@ export const useAuthProvider = () => {
     password: string, 
     referralCode?: string | null
   ): Promise<boolean> => {
-    // Simulate API request delay
     setLoading(true);
     return new Promise((resolve) => {
       setTimeout(() => {
-        // Check if user with email already exists
         const existingUser = allUsers.find((u) => u.email === email);
         
         if (existingUser) {
@@ -106,33 +98,27 @@ export const useAuthProvider = () => {
           setLoading(false);
           resolve(false);
         } else {
-          // Generate a unique referral code for the new user
           const uniqueReferralCode = `FM${Date.now().toString().slice(-6)}`;
           
-          // In a real app, you would send this data to your API
-          // For this demo, we'll just simulate a successful registration
           const newUser: UserWithPassword = {
             id: `user_${Date.now()}`,
             email,
             name,
-            password, // In a real app, this would be hashed
+            password,
             isAdmin: false,
             referralCode: uniqueReferralCode,
             referredBy: referralCode || null,
-            balance: 0, // Starting balance is zero
+            balance: 0,
             investments: [],
           };
           
-          // Add new user to all users array
           const updatedUsers = [...allUsers, newUser];
           setAllUsers(updatedUsers);
           
-          // Omit password from stored user object
           const { password: pwd, ...userWithoutPassword } = newUser;
           setUser(userWithoutPassword);
           localStorage.setItem('farmly_user', JSON.stringify(userWithoutPassword));
           
-          // Show different toast if user was referred
           if (referralCode) {
             toast({
               title: 'Registration successful',
@@ -153,11 +139,9 @@ export const useAuthProvider = () => {
   };
 
   const transferFunds = async (userId: string, amount: number, description: string): Promise<boolean> => {
-    // Simulate API request delay
     setLoading(true);
     return new Promise((resolve) => {
       setTimeout(() => {
-        // Find the user to transfer funds to
         const userIndex = allUsers.findIndex((u) => u.id === userId);
         
         if (userIndex === -1) {
@@ -172,7 +156,6 @@ export const useAuthProvider = () => {
           return;
         }
         
-        // Create updated users array with the updated balance
         const updatedUsers = [...allUsers];
         updatedUsers[userIndex] = {
           ...updatedUsers[userIndex],
@@ -181,7 +164,6 @@ export const useAuthProvider = () => {
         
         setAllUsers(updatedUsers);
         
-        // Update current user if they are the recipient
         if (user && user.id === userId) {
           setUser({
             ...user,
@@ -204,6 +186,56 @@ export const useAuthProvider = () => {
     });
   };
 
+  const addPendingInvestment = async (pendingInvestment: Omit<PendingInvestment, 'id'>): Promise<boolean> => {
+    setLoading(true);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (!user) {
+          toast({
+            title: 'Error',
+            description: 'You must be logged in to make an investment',
+            variant: 'destructive',
+          });
+          setLoading(false);
+          resolve(false);
+          return;
+        }
+        
+        const newPendingInvestment: PendingInvestment = {
+          id: `pending_${Date.now()}`,
+          ...pendingInvestment,
+        };
+        
+        const updatedUser = {
+          ...user,
+          pendingInvestments: [...(user.pendingInvestments || []), newPendingInvestment],
+        };
+        
+        setUser(updatedUser);
+        localStorage.setItem('farmly_user', JSON.stringify(updatedUser));
+        
+        const userIndex = allUsers.findIndex((u) => u.id === user.id);
+        if (userIndex !== -1) {
+          const updatedUsers = [...allUsers];
+          updatedUsers[userIndex] = {
+            ...updatedUsers[userIndex],
+            pendingInvestments: [...(updatedUsers[userIndex].pendingInvestments || []), newPendingInvestment],
+          };
+          setAllUsers(updatedUsers);
+          localStorage.setItem('farmly_all_users', JSON.stringify(updatedUsers));
+        }
+        
+        toast({
+          title: 'Investment initiated',
+          description: 'Your investment has been recorded. Please complete the bank transfer.',
+        });
+        
+        setLoading(false);
+        resolve(true);
+      }, 1000);
+    });
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('farmly_user');
@@ -215,7 +247,6 @@ export const useAuthProvider = () => {
     });
   };
 
-  // Get users without passwords for public consumption
   const getUsersWithoutPasswords = () => {
     return allUsers.map(({ password, ...rest }) => rest);
   };
@@ -228,6 +259,7 @@ export const useAuthProvider = () => {
     logout,
     isLoggedIn: !!user,
     transferFunds,
+    addPendingInvestment,
     allUsers: getUsersWithoutPasswords(),
   };
 };
