@@ -8,6 +8,7 @@ import Dashboard from '@/pages/Dashboard';
 import NotFound from '@/pages/NotFound';
 import Terms from '@/pages/Terms';
 import Privacy from '@/pages/Privacy';
+import AdminTransfer from '@/pages/AdminTransfer';
 
 const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/admin/transfer" element={<AdminTransfer />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="*" element={<NotFound />} />
