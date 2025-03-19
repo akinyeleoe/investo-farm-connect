@@ -12,10 +12,8 @@ import {
 
 interface EarningsCumulativeChartProps {
   data: {
-    name: string;
+    month: string;
     amount: number;
-    paid: boolean;
-    cumulative: number;
   }[];
 }
 
@@ -24,7 +22,7 @@ const EarningsCumulativeChart = ({ data }: EarningsCumulativeChartProps) => {
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={data}>
         <XAxis
-          dataKey="name"
+          dataKey="month"
           stroke="#888888"
           fontSize={12}
           tickLine={false}
@@ -45,7 +43,7 @@ const EarningsCumulativeChart = ({ data }: EarningsCumulativeChartProps) => {
         />
         <Line
           type="monotone"
-          dataKey="cumulative"
+          dataKey="amount"
           stroke="hsl(var(--farm-primary))"
           strokeWidth={2}
           dot={{ fill: 'hsl(var(--farm-primary))', strokeWidth: 2, r: 4 }}

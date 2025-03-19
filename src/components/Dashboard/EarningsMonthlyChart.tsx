@@ -12,9 +12,8 @@ import {
 
 interface EarningsMonthlyChartProps {
   data: {
-    name: string;
+    month: string;
     amount: number;
-    paid: boolean;
   }[];
 }
 
@@ -23,7 +22,7 @@ const EarningsMonthlyChart = ({ data }: EarningsMonthlyChartProps) => {
     <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data}>
         <XAxis
-          dataKey="name"
+          dataKey="month"
           stroke="#888888"
           fontSize={12}
           tickLine={false}
