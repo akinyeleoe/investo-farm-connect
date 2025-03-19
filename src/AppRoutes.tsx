@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Index from '@/pages/Index';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import PasswordReset from '@/pages/PasswordReset';
 import Dashboard from '@/pages/Dashboard';
 import NotFound from '@/pages/NotFound';
 import Terms from '@/pages/Terms';
@@ -16,6 +17,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Index />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/password-reset" element={<PasswordReset />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/admin/transfer" element={<AdminTransfer />} />
       <Route path="/terms" element={<Terms />} />

@@ -9,6 +9,8 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   register: (name: string, email: string, password: string, referralCode?: string | null) => Promise<boolean>;
   logout: () => void;
+  resetPassword: (email: string) => Promise<boolean>;
+  updatePassword: (email: string, newPassword: string) => Promise<boolean>;
   isLoggedIn: boolean;
   transferFunds: (userId: string, amount: number, description: string) => Promise<boolean>;
   addPendingInvestment: (pendingInvestment: Omit<PendingInvestment, 'id'>) => Promise<boolean>;

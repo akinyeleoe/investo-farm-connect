@@ -108,6 +108,62 @@ export const useAuthOperations = (
     });
   };
 
+  const resetPassword = async (email: string): Promise<boolean> => {
+    setLoading(true);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const userExists = allUsers.some(user => user.email === email);
+        
+        // Always return success regardless of whether the email exists
+        // This prevents user enumeration attacks
+        toast({
+          title: 'Password reset requested',
+          description: 'If an account with this email exists, you will receive reset instructions.',
+        });
+        
+        setLoading(false);
+        resolve(true);
+      }, 1200);
+    });
+  };
+
+  const updatePassword = async (email: string, newPassword: string): Promise<boolean> => {
+    setLoading(true);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const userIndex = allUsers.findIndex(user => user.email === email);
+        
+        if (userIndex === -1) {
+          toast({
+            title: 'Password update failed',
+            description: 'User not found',
+            variant: 'destructive',
+          });
+          
+          setLoading(false);
+          resolve(false);
+          return;
+        }
+        
+        const updatedUsers = [...allUsers];
+        updatedUsers[userIndex] = {
+          ...updatedUsers[userIndex],
+          password: newPassword,
+        };
+        
+        setAllUsers(updatedUsers);
+        
+        toast({
+          title: 'Password updated',
+          description: 'Your password has been successfully updated',
+        });
+        
+        setLoading(false);
+        resolve(true);
+      }, 1000);
+    });
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('farmly_user');
@@ -122,6 +178,8 @@ export const useAuthOperations = (
   return {
     login,
     register,
-    logout
+    logout,
+    resetPassword,
+    updatePassword
   };
 };

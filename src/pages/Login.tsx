@@ -30,6 +30,15 @@ const Login = () => {
           
           <AuthForm type="login" />
           
+          <div className="mt-4 text-center">
+            <Link 
+              to="/password-reset" 
+              className="text-sm text-muted-foreground hover:text-farm-primary hover:underline"
+            >
+              Forgot your password?
+            </Link>
+          </div>
+          
           <div className="mt-6 text-center">
             <p className="text-muted-foreground">
               Don't have an account?{' '}

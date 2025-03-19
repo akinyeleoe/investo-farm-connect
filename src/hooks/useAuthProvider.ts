@@ -16,7 +16,9 @@ export const useAuthProvider = () => {
   const { 
     login, 
     register, 
-    logout 
+    logout,
+    resetPassword,
+    updatePassword
   } = useAuthOperations(user, setUser, allUsers, setAllUsers, setLoading);
 
   const { 
@@ -34,6 +36,8 @@ export const useAuthProvider = () => {
     login,
     register,
     logout,
+    resetPassword,
+    updatePassword,
     isLoggedIn: !!user,
     transferFunds,
     addPendingInvestment,
