@@ -20,9 +20,14 @@ const DashboardHeader = ({ userName, isAdmin, onLogout }: DashboardHeaderProps) 
       
       <div className="flex flex-col sm:flex-row gap-3">
         {isAdmin && (
-          <Button asChild variant="outline">
-            <Link to="/admin/transfer">Admin Transfer</Link>
-          </Button>
+          <>
+            <Button asChild variant="outline">
+              <Link to="/admin/dashboard">Admin Dashboard</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link to="/admin/transfer">Admin Transfer</Link>
+            </Button>
+          </>
         )}
         <Button variant="outline" onClick={onLogout}>Sign Out</Button>
       </div>

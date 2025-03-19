@@ -10,6 +10,7 @@ import NotFound from '@/pages/NotFound';
 import Terms from '@/pages/Terms';
 import Privacy from '@/pages/Privacy';
 import AdminTransfer from '@/pages/AdminTransfer';
+import AdminDashboard from '@/pages/AdminDashboard';
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/password-reset" element={<PasswordReset />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/transfer" element={<AdminTransfer />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
