@@ -26,6 +26,77 @@ export const calculateMonthlyEarnings = (investments: Investment[]): number => {
   }, 0);
 };
 
+// Generate monthly earnings data for charts
+export const generateEarningsData = (investments: Investment[]): { month: string; amount: number }[] => {
+  if (!investments || investments.length === 0) {
+    return generateEmptyMonthsData();
+  }
+  
+  const data: { month: string; amount: number }[] = [];
+  const now = new Date();
+  const currentMonth = startOfMonth(now);
+  
+  // Show the last 12 months
+  for (let i = 11; i >= 0; i--) {
+    const monthDate = addMonths(currentMonth, -i);
+    const monthKey = format(monthDate, 'yyyy-MM');
+    const monthLabel = format(monthDate, 'MMM yyyy');
+    
+    const totalForMonth = investments.reduce((total, investment) => {
+      const investmentDate = parseISO(investment.date);
+      // Skip if the investment didn't exist yet in this month
+      if (isBefore(monthDate, investmentDate)) {
+        return total;
+      }
+      
+      const monthlyReturns = investment.monthlyReturns || [];
+      const monthlyReturn = monthlyReturns.find(m => m.month.startsWith(monthKey));
+      
+      return total + (monthlyReturn?.amount || 0);
+    }, 0);
+    
+    data.push({
+      month: monthLabel,
+      amount: totalForMonth
+    });
+  }
+  
+  return data;
+};
+
+// Generate cumulative earnings data for charts
+export const generateCumulativeData = (earningsData: { month: string; amount: number }[]): { month: string; amount: number }[] => {
+  if (!earningsData || earningsData.length === 0) {
+    return generateEmptyMonthsData();
+  }
+  
+  let runningTotal = 0;
+  return earningsData.map(item => {
+    runningTotal += item.amount;
+    return {
+      month: item.month,
+      amount: runningTotal
+    };
+  });
+};
+
+// Helper to generate empty data for 12 months
+const generateEmptyMonthsData = (): { month: string; amount: number }[] => {
+  const data: { month: string; amount: number }[] = [];
+  const now = new Date();
+  const currentMonth = startOfMonth(now);
+  
+  for (let i = 11; i >= 0; i--) {
+    const monthDate = addMonths(currentMonth, -i);
+    data.push({
+      month: format(monthDate, 'MMM yyyy'),
+      amount: 0
+    });
+  }
+  
+  return data;
+};
+
 // Calculate cumulative earnings over time
 export const calculateCumulativeEarnings = (investments: Investment[]): { month: string; amount: number }[] => {
   if (!investments || investments.length === 0) return [];
