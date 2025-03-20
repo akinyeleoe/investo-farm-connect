@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     target: "es2020",
-    outDir: "dist", // Ensure it's built in the correct folder
+    outDir: "dist",
     assetsDir: "assets", // Ensure assets are correctly structured
     rollupOptions: {
       output: {
@@ -40,5 +40,8 @@ export default defineConfig(({ mode }) => ({
         assetFileNames: "assets/[name].[ext]",
       },
     },
+  },
+  esbuild: {
+    loader: "tsx", // Ensure Vite correctly compiles TypeScript/JSX
   },
 }));
