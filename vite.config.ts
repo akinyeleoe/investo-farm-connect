@@ -32,5 +32,13 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: "es2020",
     outDir: "dist", // Ensure it's built in the correct folder
+    assetsDir: "assets", // Ensure assets are correctly structured
+    rollupOptions: {
+      output: {
+        entryFileNames: "assets/[name].js",
+        chunkFileNames: "assets/[name].js",
+        assetFileNames: "assets/[name].[ext]",
+      },
+    },
   },
 }));
