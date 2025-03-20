@@ -5,9 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === "development" ? "/" : "/investo-farm-connect/", // GitHub Pages fix
+  base: "/", // Ensures assets load correctly on farmly.ng
   server: {
-    host: "::",
+    host: "0.0.0.0", // Allows external access (for testing)
     port: 8080,
     fs: {
       allow: [".."],
