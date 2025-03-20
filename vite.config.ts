@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => ({
       // Allow serving files from one level up from the project root
       allow: ['..'],
     },
+    middlewareMode: false,
   },
   plugins: [
     react(),
