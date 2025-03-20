@@ -6,32 +6,31 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: mode === "development" ? "/" : "/investo-farm-connect/", // Set base path for GitHub Pages
   server: {
     host: "::",
     port: 8080,
     fs: {
-      // Allow serving files from one level up from the project root
-      allow: ['..'],
+      allow: [".."],
     },
     middlewareMode: false,
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === "development" && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
+    extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: 'es2020',
+      target: "es2020",
     },
   },
   build: {
-    target: 'es2020',
+    target: "es2020",
   },
 }));
