@@ -34,8 +34,8 @@ const ReferralSystem = () => {
   
   // Mock referral data
   const referrals = [
-    { id: 1, name: 'John Doe', date: '2024-01-15', status: 'Active', bonus: 2500 },
-    { id: 2, name: 'Jane Smith', date: '2024-02-03', status: 'Active', bonus: 2500 },
+    { id: 1, name: 'John Doe', date: '2024-01-15', status: 'Active', bonus: 1 },
+    { id: 2, name: 'Jane Smith', date: '2024-02-03', status: 'Active', bonus: 1 },
   ];
 
   return (

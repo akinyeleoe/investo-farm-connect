@@ -85,9 +85,9 @@ const investmentPlans = [
 ];
 
 const bankDetails = {
-  accountName: 'Farmly Agro Capital Limited',
-  accountNumber: '0123456789',
-  bankName: 'First Bank of Nigeria',
+  accountName: 'Agrivest Investment Limited',
+  accountNumber: '0013720358',
+  bankName: 'Guaranty Tust Bank Plc',
 };
 
 interface InvestmentPurchaseProps {

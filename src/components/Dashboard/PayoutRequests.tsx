@@ -144,7 +144,7 @@ const PayoutRequests = () => {
                     placeholder="Enter the amount"
                   />
                   <p className="text-xs text-muted-foreground">
-                    Available balance: ₦24,000
+                    Available balance: ₦00,000
                   </p>
                 </div>
               </div>
@@ -234,7 +234,7 @@ const PayoutRequests = () => {
                   Scheduled for March 1, 2024
                 </p>
               </div>
-              <div className="text-xl font-bold">₦24,000</div>
+              <div className="text-xl font-bold">₦00,000</div>
             </div>
             <div className="mt-4">
               <p className="text-sm text-muted-foreground">
